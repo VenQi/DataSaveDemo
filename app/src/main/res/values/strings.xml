@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DataSaveDemo</string>
+    <string name="hint_password">pls enter you password</string>
+</resources>
