@@ -29,4 +29,11 @@
         android:layout_height="wrap_content"
         android:onClick="btnClick"
         android:text="sqlitedatabase_greendao" />
+
+    <Button
+        android:id="@+id/file_io_sample"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btnClick"
+        android:text="file_io_sample" />
 </LinearLayout>

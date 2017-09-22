@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.data.www.datasavedemo.activities.FileIoActivity;
 import com.data.www.datasavedemo.activities.GreenDaoDemoActivity;
 import com.data.www.datasavedemo.activities.SharedPreferencesActivity;
 import com.data.www.datasavedemo.activities.SqliteDBActivity;
@@ -32,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent3 = new Intent();
                 intent3.setClass(MainActivity.this, GreenDaoDemoActivity.class);
                 startActivity(intent3);
+                break;
+            case R.id.file_io_sample:
+                Intent intent4 = new Intent();
+                intent4.setClass(MainActivity.this, FileIoActivity.class);
+                startActivity(intent4);
                 break;
             default:
                 break;
