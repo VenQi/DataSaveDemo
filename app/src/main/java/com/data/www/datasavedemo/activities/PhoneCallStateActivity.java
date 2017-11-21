@@ -16,6 +16,7 @@ import com.data.www.datasavedemo.utils.PermissionUtil;
  * 已经测试在activity正常打开的时候可以检测到来电状态，获取来点号码
  * TODO 检测应用打开，activity没打开的时候能不能检测到
  * TODO 思考如何开机自启动，以及如何保持长时间监听来电状态
+ * TODO 测试打出电话的时候能不能检测到
  */
 public class PhoneCallStateActivity extends AppCompatActivity {
 
