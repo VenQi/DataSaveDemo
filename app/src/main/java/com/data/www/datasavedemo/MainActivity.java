@@ -9,6 +9,7 @@ import com.data.www.datasavedemo.activities.FileIoActivity;
 import com.data.www.datasavedemo.activities.GreenDaoDemoActivity;
 import com.data.www.datasavedemo.activities.SharedPreferencesActivity;
 import com.data.www.datasavedemo.activities.SqliteDBActivity;
+import com.data.www.datasavedemo.activities.TestHandlerActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent4 = new Intent();
                 intent4.setClass(MainActivity.this, FileIoActivity.class);
                 startActivity(intent4);
+                break;
+            case R.id.handler_test_sample:
+                Intent intent5 = new Intent();
+                intent5.setClass(MainActivity.this, TestHandlerActivity.class);
+                startActivity(intent5);
                 break;
             default:
                 break;

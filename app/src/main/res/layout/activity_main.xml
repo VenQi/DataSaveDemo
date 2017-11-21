@@ -36,4 +36,10 @@
         android:layout_height="wrap_content"
         android:onClick="btnClick"
         android:text="file_io_sample" />
+    <Button
+        android:id="@+id/handler_test_sample"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btnClick"
+        android:text="handler_test_sample" />
 </LinearLayout>
