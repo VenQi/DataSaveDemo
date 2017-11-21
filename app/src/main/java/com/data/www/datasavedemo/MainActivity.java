@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.data.www.datasavedemo.activities.FileIoActivity;
 import com.data.www.datasavedemo.activities.GreenDaoDemoActivity;
+import com.data.www.datasavedemo.activities.PhoneCallStateActivity;
 import com.data.www.datasavedemo.activities.SharedPreferencesActivity;
 import com.data.www.datasavedemo.activities.SqliteDBActivity;
 import com.data.www.datasavedemo.activities.TestHandlerActivity;
@@ -44,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent5 = new Intent();
                 intent5.setClass(MainActivity.this, TestHandlerActivity.class);
                 startActivity(intent5);
+                break;
+            case R.id.handler_phonestate_listener:
+                Intent intent6 = new Intent();
+                intent6.setClass(MainActivity.this, PhoneCallStateActivity.class);
+                startActivity(intent6);
                 break;
             default:
                 break;

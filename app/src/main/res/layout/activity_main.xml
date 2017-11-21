@@ -42,4 +42,10 @@
         android:layout_height="wrap_content"
         android:onClick="btnClick"
         android:text="handler_test_sample" />
+    <Button
+        android:id="@+id/handler_phonestate_listener"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="btnClick"
+        android:text="handler_phonestate_listener" />
 </LinearLayout>
