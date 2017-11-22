@@ -1,5 +1,6 @@
 package com.data.www.datasavedemo;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,13 +12,35 @@ import com.data.www.datasavedemo.activities.PhoneCallStateActivity;
 import com.data.www.datasavedemo.activities.SharedPreferencesActivity;
 import com.data.www.datasavedemo.activities.SqliteDBActivity;
 import com.data.www.datasavedemo.activities.TestHandlerActivity;
+import com.data.www.datasavedemo.utils.PermissionUtil;
 
 public class MainActivity extends AppCompatActivity {
 
+    String[] permissions = new String[]{
+            Manifest.permission.READ_PHONE_STATE
+    };
+    private PermissionUtil util;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        util = new PermissionUtil(this);
+        util.requestPermissions(permissions, 110, new PermissionUtil.PermissionCallBack() {
+            @Override
+            public void onpermissionsGranted(String[] permissions) {
+
+            }
+
+            @Override
+            public void onUserHasAlreadyTurnedDownAndDontAsk(String[] permissions) {
+                finish();
+            }
+
+            @Override
+            public void onUserHasAlreadyTurnedDown(String[] permissions) {
+                finish();
+            }
+        });
     }
     public void btnClick(View v){
         switch (v.getId()){
