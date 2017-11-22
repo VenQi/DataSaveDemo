@@ -36,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("create table person(id integer primary key autoincrement,name varchar(20),address text,phone text)");
-        sqLiteDatabase.execSQL("create table callhistory(_history_id integer primary key autoincrement,date text,inorout varchar(20),address text,phone text)");
+        sqLiteDatabase.execSQL("create table callhistory(_history_id integer primary key autoincrement,date text,inorout varchar(20),address text,phone text,calltime text)");
     }
 
     @Override
@@ -44,7 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public void insertHistory(HistoryItem item){
         database = getWritableDatabase();
-        database.execSQL("insert into callhistory(date,inorout,address,phone) values (?,?,?,?)",new Object[]{item.date,item.inorout,item.address,item.phone});
+        database.execSQL("insert into callhistory(date,inorout,address,phone,calltime) values (?,?,?,?,?)",new Object[]{item.date,item.inorout,item.address,item.phone,item.lasttime});
     }
 
     public List<HistoryItem> getAllHistory(){
