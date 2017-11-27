@@ -61,13 +61,15 @@ public class DBHelper extends SQLiteOpenHelper {
             String inorout = cursor.getString(2);
             String address = cursor.getString(3);
             String phone = cursor.getString(4);
-            SimpleDateFormat format =new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String lasttime = cursor.getString(5);
+            SimpleDateFormat format =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String resultdate = format.format(new Date(Long.parseLong(date)));
-            Log.e("result",resultdate+"  "+inorout+":"+phone+" "+address+"\n");
+            Log.e("result",resultdate+"  "+inorout+":"+phone+" "+address+"---"+lasttime+"\n");
             item.date = date;
             item.inorout = inorout;
             item.address = address;
             item.phone = phone;
+            item.lasttime =lasttime;
             items.add(item);
         }
         return items;

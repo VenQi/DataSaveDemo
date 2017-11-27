@@ -62,9 +62,10 @@ public class CallHistoryAdapter extends BaseAdapter {
             holder.icon_in_out.setBackgroundResource(R.mipmap.call_in);
         }else
             holder.icon_in_out.setBackgroundResource(R.mipmap.call_out);
-        SimpleDateFormat format =new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat format =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         holder.date.setText(format.format(new Date(Long.parseLong(item.date))));
         holder.phone_num.setText(item.phone);
+        holder.call_last_time.setText(item.lasttime);
         return view;
     }
 
