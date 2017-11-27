@@ -21,23 +21,26 @@ import java.text.SimpleDateFormat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.data.www.datasavedemo.entity.SystemCache.isFinish;
+
 public class PhoneStateReceiver extends BroadcastReceiver {
     TelephonyManager manager;
     String result = "监听电话状态：/n";
     DBHelper helper;
     Long starttime = 0L;
-    boolean outgoing_flag = false;//电话是拨出还 是拨入 true为拨出 false为拨入
     String phone_num;
     private MediaRecorder mediaRecorder;
     private File file;
+
+    TelephonyManager tm;
+    MyPhoneStateListener stateListener;
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
         System.out.println("action" + intent.getAction());
         helper = new DBHelper(context);
         starttime = System.currentTimeMillis();
-        Log.e("ActionHelo",intent.getAction());
-        Log.e("去电?：",SystemCache.outgoing_call+"");
+        Log.e("去电?：", SystemCache.outgoing_call+"");
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             Intent it = new Intent();
             it.setAction(Intent.ACTION_MAIN);
@@ -47,11 +50,12 @@ public class PhoneStateReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
             //如果是去电（拨出）
             SystemCache.outgoing_call = true;
-            phone_num = getResultData();
+            SystemCache.call_phone_num = getResultData();
         } else {
             //查了下android文档，貌似没有专门用于接收来电的action,所以，非去电即来电
-            TelephonyManager tm = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
-            tm.listen(new MyPhoneStateListener(context), PhoneStateListener.LISTEN_CALL_STATE);
+            tm = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
+            stateListener = new MyPhoneStateListener(context);
+            tm.listen(stateListener, PhoneStateListener.LISTEN_CALL_STATE);
             //设置一个监听器
         }
     }
@@ -63,11 +67,11 @@ public class PhoneStateReceiver extends BroadcastReceiver {
     class MyPhoneStateListener extends PhoneStateListener {
         private final Context context;
         //获取本次通话的时间(单位:秒)
-        int time = 0;
-        //判断是否正在通话
-        boolean isCalling;
-        //控制循环是否结束
-        boolean isFinish;
+//        int time = 0;
+//        //判断是否正在通话
+//        boolean isCalling;
+//        //控制循环是否结束
+//        boolean isFinish;
         private ExecutorService service;
 
         public MyPhoneStateListener(Context context) {
@@ -77,41 +81,41 @@ public class PhoneStateReceiver extends BroadcastReceiver {
 
         @Override
         public void onCallStateChanged(int state, String incomingNumber) {
-            Log.e("incomming",incomingNumber);
+            Log.e("incomming",SystemCache.call_phone_num +"--------");
             if(!TextUtils.isEmpty(incomingNumber)){
-                phone_num = incomingNumber;
+                SystemCache.call_phone_num = incomingNumber;
             }
+            Log.e("incomming",SystemCache.call_phone_num +"--------");
             try {
             switch (state) {
                 case TelephonyManager.CALL_STATE_IDLE:
-                    Log.e("phone state","CALL_STATE_IDLE"+"正在通话吗："+isCalling+"结束了吗："+isFinish+"去电："+SystemCache.outgoing_call);
+                    Log.e("phone state","CALL_STATE_IDLE"+"正在通话吗："+SystemCache.isCalling+"结束了吗："+SystemCache.isFinish+"去电："+SystemCache.outgoing_call+"---"+incomingNumber);
 //                    if(mediaRecorder != null)
 //                    {
 //                        mediaRecorder.stop();
 //                        mediaRecorder.release();
 //                        mediaRecorder = null;
 //                    }
-                    if (isCalling) {
-                        isCalling = false;
-                        isFinish = true;
+
+                    if (SystemCache.isCalling) {
                         service.shutdown();
-                        Toast.makeText(context, "本次通话" + time + "秒",
+                        Toast.makeText(context, "本次通话" + SystemCache.lasttime + "秒",
                                 Toast.LENGTH_LONG).show();
-                        Log.e("本次通话",time+"秒");
+//                        Log.e("本次通话",time+"秒");
                         HistoryItem item = new HistoryItem();
                         item.date = String.valueOf(starttime);
                         item.inorout = SystemCache.outgoing_call?"out":"in";
-                        item.lasttime = time+"s";
-                        item.phone = phone_num;
+                        item.lasttime = SystemCache.lasttime+"s";
+                        item.phone = SystemCache.call_phone_num;
                         item.address = "";
                         helper.insertHistory(item);
-                        time = 0;
                     }
-                    SystemCache.outgoing_call = false;
+                    SystemCache.init();
                     break;
                 case TelephonyManager.CALL_STATE_OFFHOOK:
-                    isCalling = true;
-                    Log.e("phone state","CALL_STATE_OFFHOOK"+"正在通话吗："+isCalling+"结束了吗："+isFinish+"去电："+SystemCache.outgoing_call);
+                    SystemCache.isCalling = true;
+                    SystemCache.isFinish = false;
+                    Log.e("phone state","CALL_STATE_OFFHOOK"+"正在通话吗："+SystemCache.isCalling+"结束了吗："+SystemCache.isFinish+"去电："+SystemCache.outgoing_call);
                     SimpleDateFormat format =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //                    file = new File(Environment.getExternalStorageDirectory(), format.format(new Date(starttime))+ ".3gp");
 //                    mediaRecorder = new MediaRecorder();
@@ -129,7 +133,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                             while (!isFinish) {
                                 try {
                                     Thread.sleep(1000);
-                                    time++;
+                                    SystemCache.lasttime++;
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -139,7 +143,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
                     break;
                 case TelephonyManager.CALL_STATE_RINGING:
                     isFinish = false;
-                    Log.e("phone state","CALL_STATE_RINGING"+"正在通话吗："+isCalling+"结束了吗："+isFinish+"去电："+SystemCache.outgoing_call);
+                    Log.e("phone state","CALL_STATE_RINGING"+"正在通话吗："+SystemCache.isCalling+"结束了吗："+SystemCache.isFinish+"去电："+SystemCache.outgoing_call);
                     if (service.isShutdown()) {
                         service = Executors.newSingleThreadExecutor();
                     }
@@ -148,6 +152,7 @@ public class PhoneStateReceiver extends BroadcastReceiver {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            tm.listen(stateListener,PhoneStateListener.LISTEN_NONE);
         }
     }
 }
