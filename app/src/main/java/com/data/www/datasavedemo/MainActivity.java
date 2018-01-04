@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.data.www.datasavedemo.activities.FileIoActivity;
 import com.data.www.datasavedemo.activities.GreenDaoDemoActivity;
+import com.data.www.datasavedemo.activities.LocationActivity;
 import com.data.www.datasavedemo.activities.PhoneCallStateActivity;
 import com.data.www.datasavedemo.activities.SharedPreferencesActivity;
 import com.data.www.datasavedemo.activities.SqliteDBActivity;
@@ -75,6 +76,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent6 = new Intent();
                 intent6.setClass(MainActivity.this, PhoneCallStateActivity.class);
                 startActivity(intent6);
+                break;
+            case R.id.handler_location:
+                Intent intent7 = new Intent();
+                intent7.setClass(MainActivity.this, LocationActivity.class);
+                startActivity(intent7);
                 break;
             default:
                 break;

@@ -99,6 +99,15 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return sb.toString();
     }
+    public Cursor getAll(String table){
+        database = getWritableDatabase();
+        Cursor cursor = database.rawQuery("select * from "+table, null);
+        return cursor;
+    }
+    public Cursor getSelectPersons(String selection,String[] selectionArgs,String sortorder){
+        Cursor cursor = database.query("person",null,selection,selectionArgs,null,null,null,sortorder);
+        return cursor;
+    }
     public void delAll(){
         database = getWritableDatabase();
         database.execSQL("delete from person");

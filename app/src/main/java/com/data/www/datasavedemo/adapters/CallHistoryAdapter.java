@@ -48,10 +48,10 @@ public class CallHistoryAdapter extends BaseAdapter {
         if (view == null){
             holder = new ViewHolder();
             view  = LayoutInflater.from(context).inflate(R.layout.call_history_item,null);
-            holder.icon_in_out = view.findViewById(R.id.inorout_icon);
-            holder.date = view.findViewById(R.id.call_date);
-            holder.phone_num = view.findViewById(R.id.call_num);
-            holder.call_last_time = view.findViewById(R.id.call_time);
+            holder.icon_in_out = (ImageView) view.findViewById(R.id.inorout_icon);
+            holder.date = (TextView) view.findViewById(R.id.call_date);
+            holder.phone_num = (TextView)view.findViewById(R.id.call_num);
+            holder.call_last_time = (TextView)view.findViewById(R.id.call_time);
             view.setTag(holder);
         }else{
             holder = (ViewHolder) view.getTag();
