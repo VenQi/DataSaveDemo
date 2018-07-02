@@ -35,10 +35,10 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
         <activity android:name=".activities.SharedPreferencesActivity" />
         <activity android:name=".activities.SqliteDBActivity" />
@@ -65,7 +65,9 @@
             android:name=".provider.MyContentProvider"
             android:authorities="com.data.www.datasavedemo.provider"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true" />
+
+        <activity android:name=".activities.TimerActivity"></activity>
     </application>
 
 </manifest>

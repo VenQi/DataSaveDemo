@@ -40,6 +40,7 @@ dependencies {
     compile 'org.greenrobot:greendao:3.0.1'
     compile 'org.greenrobot:greendao-generator:3.0.0'
     compile 'com.google.android.gms:play-services-location:11.0.4'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
 }
 

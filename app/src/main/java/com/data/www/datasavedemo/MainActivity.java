@@ -13,6 +13,7 @@ import com.data.www.datasavedemo.activities.PhoneCallStateActivity;
 import com.data.www.datasavedemo.activities.SharedPreferencesActivity;
 import com.data.www.datasavedemo.activities.SqliteDBActivity;
 import com.data.www.datasavedemo.activities.TestHandlerActivity;
+import com.data.www.datasavedemo.activities.TimerActivity;
 import com.data.www.datasavedemo.utils.PermissionUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -81,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent7 = new Intent();
                 intent7.setClass(MainActivity.this, LocationActivity.class);
                 startActivity(intent7);
+                break;
+            case R.id.handler_timer_task_activity:
+                Intent intent8 = new Intent();
+                intent8.setClass(MainActivity.this, TimerActivity.class);
+                startActivity(intent8);
                 break;
             default:
                 break;
