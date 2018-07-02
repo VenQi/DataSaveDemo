@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     //我是feaure1
     //这是feature2
+    //这是feature1-fix
     String[] permissions = new String[]{
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
